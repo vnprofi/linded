@@ -1,0 +1,140 @@
+/* Основная панель */
+#li-scraper-panel {
+    position: fixed;
+    top: 80px;
+    right: 20px; /* Стартовая позиция */
+    width: 340px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    z-index: 999999;
+    font-family: system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    /* transition удален, чтобы перетаскивание было мгновенным */
+}
+
+/* Шапка (за нее будем таскать) */
+.lip-header {
+    background: #0a66c2;
+    padding: 12px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move; /* Курсор перетаскивания */
+    user-select: none; /* Чтобы текст не выделялся при перетаскивании */
+}
+
+.lip-reset-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.lip-reset-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Тело */
+.lip-body {
+    padding: 15px;
+}
+
+/* Статусы */
+.lip-status {
+    padding: 8px;
+    margin-bottom: 5px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #888;
+    transition: background 0.3s, color 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.lip-status.ready {
+    background: #e6f4ea;
+    color: #057642;
+    border-left: 4px solid #057642;
+}
+
+/* Кнопки действий */
+.lip-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: none;
+    border-radius: 6px;
+    background: #eee;
+    color: #aaa;
+    font-weight: bold;
+    cursor: not-allowed;
+    transition: all 0.2s;
+}
+
+.lip-btn:disabled {
+    opacity: 0.7;
+}
+
+.lip-btn.active {
+    background: #0a66c2;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(10, 102, 194, 0.3);
+}
+
+.lip-btn.active:hover {
+    background: #004182;
+}
+
+/* Кнопка Telegram */
+.lip-contact-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+    border: 2px solid #0088cc;
+    border-radius: 6px;
+    background: white;
+    color: #0088cc;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.lip-contact-btn:hover {
+    background: #0088cc;
+    color: white;
+}
+
+/* Прогресс бар */
+.lip-progress-area {
+    margin-top: 15px;
+    display: none;
+}
+.lip-progress-bg {
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    overflow: hidden;
+}
+.lip-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #0a66c2;
+    transition: width 0.2s;
+}
+.lip-progress-text {
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+    margin-top: 5px;
+}

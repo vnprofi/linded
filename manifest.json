@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn Parser",
+  "version": "1.0.0",
+  "description": "Парсер лайков, комментариев и репостов",
+  "permissions": [
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js", "styles.css"],
+      "matches": ["https://www.linkedin.com/*"]
+    }
+  ]
+}
