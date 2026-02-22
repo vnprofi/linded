@@ -13,6 +13,7 @@
   let isScrapingConnections = false;
   let isScrapingJobs = false; // Флаг для парсинга вакансий
   let isScrapingProfiles = false;
+  let fightersCacheMemory = [];
   const FIGHTERS_CACHE_KEY = 'li_parser_fighters_cache_v1';
   const PROFILE_FETCH_DELAY_MIN = 900;
   const PROFILE_FETCH_DELAY_MAX = 1800;
@@ -145,20 +146,32 @@
   }
 
   function loadFightersCache() {
+      if (Array.isArray(fightersCacheMemory) && fightersCacheMemory.length > 0) {
+          return fightersCacheMemory;
+      }
       try {
           const raw = localStorage.getItem(FIGHTERS_CACHE_KEY);
           if (!raw) return [];
           const parsed = JSON.parse(raw);
           if (!Array.isArray(parsed)) return [];
-          return parsed.filter(x => x && typeof x === 'object');
+          fightersCacheMemory = parsed.filter(x => x && typeof x === 'object');
+          return fightersCacheMemory;
       } catch (e) {
           return [];
       }
   }
 
   function saveFightersCache(rows) {
+      fightersCacheMemory = Array.isArray(rows) ? rows.filter(x => x && typeof x === 'object') : [];
+      const compactRows = fightersCacheMemory.map(row => ({
+          "Имя": row["Имя"] || '',
+          "Должность": row["Должность"] || '',
+          "Локация": row["Локация"] || '',
+          "Профиль": row["Профиль"] || '',
+          "Общие контакты": row["Общие контакты"] || ''
+      }));
       try {
-          localStorage.setItem(FIGHTERS_CACHE_KEY, JSON.stringify(rows || []));
+          localStorage.setItem(FIGHTERS_CACHE_KEY, JSON.stringify(compactRows));
       } catch (e) {}
   }
 
@@ -170,6 +183,7 @@
           statusProfiles.classList.add('ready');
           statusProfiles.innerHTML = `✅ <b>Профили</b>: база бойцов готова (${cached.length})`;
           btnProfiles.innerText = '🧠 Расширить Бойцов (профили)';
+          return;
       } else if (!isScrapingProfiles) {
           btnProfiles.disabled = true;
           btnProfiles.classList.remove('active');
@@ -665,6 +679,7 @@
       const fightersForCache = normalizedFighters.length > 0 ? normalizedFighters : allFighters;
       if (fightersForCache.length > 0) {
           saveFightersCache(fightersForCache);
+          console.log(`[LI Parser] Fighters cache updated: ${fightersForCache.length}`);
           updateUi('PROFILES');
       }
       showProgress(100, `Готово! Всего бойцов: ${allFighters.length}`);
