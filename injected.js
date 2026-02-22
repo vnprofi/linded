@@ -662,14 +662,16 @@
           dedupByProfile.set(normalized, { ...row, "Профиль": normalized });
       });
       const normalizedFighters = Array.from(dedupByProfile.values());
-      if (normalizedFighters.length > 0) {
-          saveFightersCache(normalizedFighters);
+      const fightersForCache = normalizedFighters.length > 0 ? normalizedFighters : allFighters;
+      if (fightersForCache.length > 0) {
+          saveFightersCache(fightersForCache);
           updateUi('PROFILES');
       }
       showProgress(100, `Готово! Всего бойцов: ${allFighters.length}`);
       await sleep(500);
       finishAndExport(allFighters, 'Fighters');
       btnPeople.innerText = '🤼‍♂️ Собрать Бойцов';
+      refreshProfilesButtonState();
   }
 
   function findSectionByHeading(doc, headingMatchers) {
